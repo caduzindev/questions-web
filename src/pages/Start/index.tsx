@@ -9,9 +9,13 @@ const Start = ()=>{
     const {state} = useLocation<LocationState>()
     const history = useHistory()
     
+    const handleQuiz = ()=>{
+        history.push({pathname:"/quiz"})
+    }
+
     return (
         <>
-            <Button onClick={()=>history.push('/')}>Start</Button>
+            <Button onClick={handleQuiz}>Start</Button>
             <Button onClick={()=>history.push('/')}>Cancel</Button>
         </>
     )
