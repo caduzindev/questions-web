@@ -13,6 +13,7 @@ export class Question{
     difficulty;
     correct_answer;
     incorrect_answers;
+    questions:Array<string>;
 
     constructor(json:QuestionJson){
         this.question = json.question
@@ -21,5 +22,10 @@ export class Question{
         this.difficulty = json.difficulty
         this.correct_answer = json.correct_answer
         this.incorrect_answers = json.incorrect_answers
+        this.questions = []
+    }
+
+    public getAllQuestions():Array<string>{
+        return [this.correct_answer,...this.incorrect_answers]
     }
 }

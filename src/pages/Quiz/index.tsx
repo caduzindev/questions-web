@@ -1,6 +1,25 @@
+import { useEffect } from "react"
+import { useQuiz } from "../../hooks/useQuiz"
+import MultipleQuestion from "../components/MultipleQuestion"
+
 const Quiz = ()=>{
+    const { state } = useQuiz()
+   
+    useEffect(()=>{
+        if(!!state.questions){
+            console.log(state.questions)
+        }
+    },[state])
+
     return (
-        <h1>Quiz</h1>
+        <>
+            {state.questions && (
+                state.questions.map(item=>(
+                    <MultipleQuestion {...item}/>
+                ))
+            )}
+        </>
+        // <h1>asdjhsadas</h1>
     )
 }
 

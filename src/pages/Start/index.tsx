@@ -1,5 +1,6 @@
 import { Button } from "@material-ui/core"
 import { useLocation,useHistory } from "react-router";
+import { useQuiz } from "../../hooks/useQuiz";
 
 interface LocationState{
     qt:string
@@ -7,15 +8,15 @@ interface LocationState{
 
 const Start = ()=>{
     const {state} = useLocation<LocationState>()
+    const {handleQuiz} = useQuiz()
     const history = useHistory()
-    
-    const handleQuiz = ()=>{
-        history.push({pathname:"/quiz"})
-    }
 
     return (
         <>
-            <Button onClick={handleQuiz}>Start</Button>
+            <Button onClick={()=>{
+                handleQuiz(Number(state.qt))
+                history.push('/quiz')
+            }}>Start</Button>
             <Button onClick={()=>history.push('/')}>Cancel</Button>
         </>
     )

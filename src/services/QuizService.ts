@@ -6,10 +6,17 @@ class QuizService{
     constructor(repository:QuizRepository){
         this.repository = repository
     }
-    async getQuestions(quantity:number):Promise<QuestionJson|undefined>{
-        if(quantity > 0){
-            const data = await this.repository.getQuestions(quantity)
-            return data
+    async getQuestions(quantity:number):Promise<QuestionJson[]|undefined>{
+        try{
+            if(quantity > 0){
+                const data = await this.repository.getQuestions(quantity)
+                if(data.length===0){
+                    throw new Error('Deu erro')
+                }
+                return data
+            }
+        }catch(error){
+            console.error(error)
         }
     }
 }
