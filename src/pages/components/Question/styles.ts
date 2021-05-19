@@ -4,10 +4,9 @@ import styled from 'styled-components'
 export const Container = styled(Grid)`
     &&{
         background-color:#DADADA;
-        height:500px;
+        height:450px;
         width:450px;
-        padding:10px;
-        
+        padding:15px;
     }
 `
 export const TextHead = styled(Typography)`

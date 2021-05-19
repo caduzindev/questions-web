@@ -11,12 +11,17 @@ class QuizService{
             if(quantity > 0){
                 const data = await this.repository.getQuestions(quantity)
                 if(data.length===0){
-                    throw new Error('Deu erro')
+                    throw new Error('Deu erroooo')
                 }
                 return data
             }
         }catch(error){
             console.error(error)
+        }
+    }
+    public setScoreStorage(score:number){
+        if(score>0){
+            localStorage.setItem('score',String(score))
         }
     }
 }
