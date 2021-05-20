@@ -4,18 +4,25 @@ import { Container, TextHead, TextQuestion } from "./styles"
 import QuestionFactory from '../../../Factory/QuestionFactory'
 import Mutiple from "./Multiple"
 import { useQuiz } from "../../../hooks/useQuiz"
+import { useEffect, useState } from "react"
 
 const Question = (props:QuestionJson)=>{
     const { handleAnswerQuestion } = useQuiz()
     const Question = QuestionFactory(props)
+    const [questions,setQuestions] = useState<Array<string>>()
 
     const handleChangeInput = (e:React.ChangeEvent<HTMLInputElement>)=>{
         const chosen = e.target.value
 
         Question.setChosen(chosen)
         
-        handleAnswerQuestion(Question.id,chosen,false)
+        handleAnswerQuestion(Question.id,chosen,Question.IsCorrect())
     }
+
+    useEffect(()=>{
+        setQuestions(Question.getAllQuestions())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     return (
         <Container container spacing={2} direction="column">
@@ -29,7 +36,11 @@ const Question = (props:QuestionJson)=>{
                 <TextQuestion>{Question.question}</TextQuestion>
             </Grid>
             <Grid item>
-                {Question.type === 'multiple' && <Mutiple handle={handleChangeInput} questions={Question.getAllQuestions()}/>}
+                {questions &&(
+                    <>
+                        {Question.type === 'multiple' && <Mutiple handle={handleChangeInput} questions={questions}/>}
+                    </>
+                )}
             </Grid>
         </Container>
     )

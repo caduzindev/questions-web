@@ -1,21 +1,21 @@
 import { QuestionJson } from "../../Entity/Question";
 import { ANSWER_QUESTION, SET_QUESTIONS } from "../types/QuizTypes";
 
-export const setQuestions = (quantity:number,questions:QuestionJson[])=>{
+export const setQuestions = (questions:QuestionJson[])=>{
     return {
         type:SET_QUESTIONS,
         payload:{
-            questions,
-            quantity
+            questions
         }
     }
 }
-export const answerQuestion = (id:string,chosen:string)=>{
+export const answerQuestion = (id:string,chosen:string,isCorrect:boolean)=>{
     return {
         type:ANSWER_QUESTION,
         payload:{
             id,
-            chosen
+            chosen,
+            isCorrect
         }
     }
-} 
+}

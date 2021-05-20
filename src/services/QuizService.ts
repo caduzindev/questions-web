@@ -19,11 +19,6 @@ class QuizService{
             console.error(error)
         }
     }
-    public setScoreStorage(score:number){
-        if(score>0){
-            localStorage.setItem('score',String(score))
-        }
-    }
 }
 
 export default new QuizService(new QuizRepository())
