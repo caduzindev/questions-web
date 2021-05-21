@@ -2,7 +2,7 @@ import { Grid } from "@material-ui/core"
 import { QuestionJson } from "../../../Entity/Question"
 import { Container, TextHead, TextQuestion } from "./styles"
 import QuestionFactory from '../../../Factory/QuestionFactory'
-import Mutiple from "./Multiple"
+import CommmomForm from "./CommomForm"
 import { useQuiz } from "../../../hooks/useQuiz"
 import { useEffect, useState } from "react"
 
@@ -38,7 +38,7 @@ const Question = (props:QuestionJson)=>{
             <Grid item>
                 {questions &&(
                     <>
-                        {Question.type === 'multiple' && <Mutiple handle={handleChangeInput} questions={questions}/>}
+                        <CommmomForm handle={handleChangeInput} questions={questions}/>
                     </>
                 )}
             </Grid>

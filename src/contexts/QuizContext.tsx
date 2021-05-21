@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { QuestionJson } from "../Entity/Question"
 import { SuffleResponses } from "../helper/SuffleResponses"
 import QuizService from "../services/QuizService"
-import { answerQuestion,setQuestions } from "./actions/QuizActions"
-import { SET_QUESTIONS, ANSWER_QUESTION } from "./types/QuizTypes"
+import { answerQuestion,setErrorsHits,setQuestions } from "./actions/QuizActions"
+import { SET_QUESTIONS, ANSWER_QUESTION, SET_ERRORS_HITS } from "./types/QuizTypes"
 
 interface QuizInterface{
     children: React.ReactNode
@@ -22,6 +22,7 @@ interface QuizContextInterface{
     dispatch:any
     handleQuiz:(quantity:number)=>void
     handleAnswerQuestion:(idQuestion:string,chosen:string,isCorrect:boolean)=>void
+    viewResult:()=>boolean
 }
 
 export const QuizContext = createContext({} as QuizContextInterface)
@@ -36,6 +37,7 @@ const initialState = {
 type ACTIONTYPE = 
     | { type:typeof SET_QUESTIONS,payload:{questions:QuestionJson[]} }
     | { type:typeof ANSWER_QUESTION,payload:{id:string,chosen:string,isCorrect:boolean} }
+    | { type:typeof SET_ERRORS_HITS,payload:{errors:number,hits:number} }
 
 const reduce = (state:StateOfContext=initialState,action:ACTIONTYPE)=>{
     switch (action.type) {
@@ -61,6 +63,12 @@ const reduce = (state:StateOfContext=initialState,action:ACTIONTYPE)=>{
                     return item
                 })
             }
+        case SET_ERRORS_HITS:
+            return {
+                ...state,
+                totalHits:action.payload.hits,
+                totalErrors:action.payload.errors
+            }
         default:
             return state
     }
@@ -75,15 +83,30 @@ const QuizProvider = ({children}:QuizInterface)=>{
             dispatch(setQuestions(questions))
         }
     }
+
     const handleAnswerQuestion = (idQuestion:string,chosen:string,isCorrect:boolean)=>{
         dispatch(answerQuestion(idQuestion,chosen,isCorrect))
+    }
+
+    const viewResult = ():boolean=>{
+        if(!QuizService.AllQuestionsAnswered(state.questions)){
+            return false
+        }
+        handleViewResultReport()
+        return true
+    }
+    const handleViewResultReport = ()=>{
+        const { errors,hits } = QuizService.getErrorAndHits(state.questions)
+
+        dispatch(setErrorsHits(errors,hits))
     }
     return (
         <QuizContext.Provider value={{
             state,
             dispatch,
             handleQuiz,
-            handleAnswerQuestion
+            handleAnswerQuestion,
+            viewResult
         }}>
             {children}
         </QuizContext.Provider>

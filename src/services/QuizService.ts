@@ -19,6 +19,32 @@ class QuizService{
             console.error(error)
         }
     }
+    public AllQuestionsAnswered(array:QuestionJson[]):boolean{
+        const result = array.find(item=>!item.chosen)
+
+        if(result){
+            return false
+        }
+
+        return true
+    }
+    public getErrorAndHits(questions:QuestionJson[]):{errors:number,hits:number}{
+        let errors = 0
+        let hits = 0
+
+        questions.forEach(question => {
+            if(question.right){
+                hits+=1
+            }else{
+                errors+=1
+            }
+        });
+
+        return {
+            errors,
+            hits
+        }
+    }
 }
 
 export default new QuizService(new QuizRepository())

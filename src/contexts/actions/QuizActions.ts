@@ -1,5 +1,5 @@
 import { QuestionJson } from "../../Entity/Question";
-import { ANSWER_QUESTION, SET_QUESTIONS } from "../types/QuizTypes";
+import { ANSWER_QUESTION, SET_ERRORS_HITS, SET_QUESTIONS } from "../types/QuizTypes";
 
 export const setQuestions = (questions:QuestionJson[])=>{
     return {
@@ -16,6 +16,15 @@ export const answerQuestion = (id:string,chosen:string,isCorrect:boolean)=>{
             id,
             chosen,
             isCorrect
+        }
+    }
+}
+export const setErrorsHits = (errors:number,hits:number)=>{
+    return {
+        type:SET_ERRORS_HITS,
+        payload:{
+            errors,
+            hits
         }
     }
 }

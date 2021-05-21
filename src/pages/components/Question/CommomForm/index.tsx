@@ -5,7 +5,7 @@ interface MultipleProps{
     questions:Array<string>
 }
 
-const Mutiple = ({ questions,handle }:MultipleProps)=>{
+const CommomForm = ({ questions,handle }:MultipleProps)=>{
     return (
         <form>
             <FormControl component="fieldset">
@@ -20,4 +20,4 @@ const Mutiple = ({ questions,handle }:MultipleProps)=>{
         </form>
     )
 }
-export default Mutiple
+export default CommomForm
