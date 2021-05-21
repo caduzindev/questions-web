@@ -3,14 +3,18 @@ import { useEffect } from "react"
 import { useQuiz } from "../../hooks/useQuiz"
 import MultipleQuestion from "../components/Question"
 import { ToastContainer,toast } from 'react-toastify'
+import { useHistory } from "react-router"
 
 const Quiz = ()=>{
+    const history = useHistory()
     const { state,viewResult } = useQuiz()
 
     const handleViewResult = ()=>{
         const result = viewResult()
         if(!result){
             toast.error('Por favor respoda todas as questões')
+        }else{
+            history.push('/')
         }
     }
 

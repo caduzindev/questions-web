@@ -45,6 +45,11 @@ class QuizService{
             hits
         }
     }
+    public setTotalScore(hitValue:number,hits:number):void{
+        const total = hitValue*hits
+
+        localStorage.setItem('score',String(total))
+    }
 }
 
 export default new QuizService(new QuizRepository())

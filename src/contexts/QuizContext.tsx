@@ -99,6 +99,8 @@ const QuizProvider = ({children}:QuizInterface)=>{
         const { errors,hits } = QuizService.getErrorAndHits(state.questions)
 
         dispatch(setErrorsHits(errors,hits))
+
+        QuizService.setTotalScore(state.hitValue,state.totalHits)
     }
     return (
         <QuizContext.Provider value={{
