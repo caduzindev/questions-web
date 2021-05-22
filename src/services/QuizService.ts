@@ -47,8 +47,10 @@ class QuizService{
     }
     public setTotalScore(hitValue:number,hits:number):void{
         const total = hitValue*hits
-
         localStorage.setItem('score',String(total))
+    }
+    public getTotalScore():number{
+        return Number(localStorage.getItem('score'))
     }
 }
 

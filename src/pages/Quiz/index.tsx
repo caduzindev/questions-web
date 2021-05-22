@@ -1,7 +1,6 @@
 import { Button, Grid } from "@material-ui/core"
-import { useEffect } from "react"
 import { useQuiz } from "../../hooks/useQuiz"
-import MultipleQuestion from "../components/Question"
+import Question from "../components/Question"
 import { ToastContainer,toast } from 'react-toastify'
 import { useHistory } from "react-router"
 
@@ -14,15 +13,9 @@ const Quiz = ()=>{
         if(!result){
             toast.error('Por favor respoda todas as questões')
         }else{
-            history.push('/')
+            history.push('/report')
         }
     }
-
-    useEffect(()=>{
-        if(state.questions){
-            console.log(state.questions)
-        }
-    },[state])
 
     return (
         <Grid container direction="column" alignItems="center" spacing={5}>
@@ -30,7 +23,7 @@ const Quiz = ()=>{
             {state.questions && (
                 state.questions.map(item=>(
                     <Grid item>
-                        <MultipleQuestion {...item}/>
+                        <Question {...item} typeForm="commom"/>
                     </Grid>
                 ))
             )}

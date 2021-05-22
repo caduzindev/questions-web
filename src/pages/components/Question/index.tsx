@@ -5,8 +5,13 @@ import QuestionFactory from '../../../Factory/QuestionFactory'
 import CommmomForm from "./CommomForm"
 import { useQuiz } from "../../../hooks/useQuiz"
 import { useEffect, useState } from "react"
+import ReportForm from "./ReportForm"
 
-const Question = (props:QuestionJson)=>{
+interface QuestionProps extends QuestionJson{
+    typeForm:string;
+}
+
+const Question = (props:QuestionProps)=>{
     const { handleAnswerQuestion } = useQuiz()
     const Question = QuestionFactory(props)
     const [questions,setQuestions] = useState<Array<string>>()
@@ -38,7 +43,16 @@ const Question = (props:QuestionJson)=>{
             <Grid item>
                 {questions &&(
                     <>
-                        <CommmomForm handle={handleChangeInput} questions={questions}/>
+                        {props.typeForm==='commom' && (
+                            <CommmomForm handle={handleChangeInput} questions={questions}/>
+                        )}
+                        {props.typeForm==='report' && (
+                            <>
+                                {Question.right !== undefined && Question.chosen &&(
+                                    <ReportForm questions={questions} right={Question.right} chosen={Question.chosen} correct={Question.correct_answer}/>
+                                )}
+                            </>
+                        )}
                     </>
                 )}
             </Grid>

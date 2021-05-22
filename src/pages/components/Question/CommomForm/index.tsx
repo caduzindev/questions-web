@@ -1,11 +1,11 @@
 import { FormControl, FormControlLabel, Radio, RadioGroup } from "@material-ui/core"
 
-interface MultipleProps{
+interface CommomProps{
     handle:(e:React.ChangeEvent<HTMLInputElement>)=>void;
     questions:Array<string>
 }
 
-const CommomForm = ({ questions,handle }:MultipleProps)=>{
+const CommomForm = ({ questions,handle }:CommomProps)=>{
     return (
         <form>
             <FormControl component="fieldset">
