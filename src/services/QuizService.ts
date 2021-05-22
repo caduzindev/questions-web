@@ -20,7 +20,7 @@ class QuizService{
         }
     }
     public AllQuestionsAnswered(array:QuestionJson[]):boolean{
-        const result = array.find(item=>!item.chosen)
+        const result = this.repository.AllQuestionsAnswered(array)
 
         if(result){
             return false
@@ -47,10 +47,10 @@ class QuizService{
     }
     public setTotalScore(hitValue:number,hits:number):void{
         const total = hitValue*hits
-        localStorage.setItem('score',String(total))
+        this.repository.setStorage('score',total)
     }
     public getTotalScore():number{
-        return Number(localStorage.getItem('score'))
+        return this.repository.getStorage('score')
     }
 }
 

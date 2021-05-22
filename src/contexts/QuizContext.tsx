@@ -1,8 +1,10 @@
 import { createContext, useReducer } from "react"
 import { v4 as uuidv4 } from 'uuid'
 import { QuestionJson } from "../Entity/Question"
+import { ReportJson } from '../Entity/Report'
 import { SuffleResponses } from "../helper/SuffleResponses"
 import QuizService from "../services/QuizService"
+import ReportService from "../services/ReportService"
 import { answerQuestion,setErrorsHits,setQuestions } from "./actions/QuizActions"
 import { SET_QUESTIONS, ANSWER_QUESTION, SET_ERRORS_HITS } from "./types/QuizTypes"
 
@@ -10,19 +12,13 @@ interface QuizInterface{
     children: React.ReactNode
 }
 
-interface StateOfContext{
-    hitValue:number;
-    totalHits: number;
-    totalErrors: number;
-    questions:QuestionJson[]
-}
-
 interface QuizContextInterface{
-    state:StateOfContext
+    state:ReportJson
     dispatch:any
     handleQuiz:(quantity:number)=>void
     handleAnswerQuestion:(idQuestion:string,chosen:string,isCorrect:boolean)=>void
     viewResult:()=>boolean
+    handleSave:(name:string)=>void
 }
 
 export const QuizContext = createContext({} as QuizContextInterface)
@@ -39,7 +35,7 @@ type ACTIONTYPE =
     | { type:typeof ANSWER_QUESTION,payload:{id:string,chosen:string,isCorrect:boolean} }
     | { type:typeof SET_ERRORS_HITS,payload:{errors:number,hits:number} }
 
-const reduce = (state:StateOfContext=initialState,action:ACTIONTYPE)=>{
+const reduce = (state:ReportJson=initialState,action:ACTIONTYPE)=>{
     switch (action.type) {
         case SET_QUESTIONS:
             return {
@@ -101,13 +97,18 @@ const QuizProvider = ({children}:QuizInterface)=>{
         dispatch(setErrorsHits(errors,hits))
         
     }
+    const handleSave = (name:string)=>{
+        const totalScore = QuizService.getTotalScore()
+        ReportService.save(uuidv4(),name,totalScore,state)
+    }
     return (
         <QuizContext.Provider value={{
             state,
             dispatch,
             handleQuiz,
             handleAnswerQuestion,
-            viewResult
+            viewResult,
+            handleSave
         }}>
             {children}
         </QuizContext.Provider>

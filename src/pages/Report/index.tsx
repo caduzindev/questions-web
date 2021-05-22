@@ -1,13 +1,18 @@
-import { Card, CardContent, Grid } from "@material-ui/core"
+import {  Card, CardContent, Grid } from "@material-ui/core"
 import { useEffect, useState } from "react"
+import ReportFactory from "../../Factory/ReportFactory"
 import { useQuiz } from "../../hooks/useQuiz"
 import QuizService from "../../services/QuizService"
+import DialogSaveReport from "../components/DialogSaveReport"
 import ReportQuestionsResolved from "../components/ReportQuestionsResolved"
-import { CircleContent, NumberOfCircle, TextOfCircle } from "./styles"
+import { ButtonActionReport, CircleContent, NumberOfCircle, TextOfCircle } from "./styles"
 
 const Report = ()=>{
     const { state } = useQuiz()
+    const Report = ReportFactory(state)
     const [totalScore,setTotalScore] = useState(0)
+    const [open,setOpen] = useState(false)
+    const [name,setName] = useState('')
 
     useEffect(()=>{
         if(!!state.totalHits){
@@ -28,7 +33,7 @@ const Report = ()=>{
                                     width:280,
                                     height:280,
                                 }}>
-                                    <NumberOfCircle>{state.totalHits}</NumberOfCircle>
+                                    <NumberOfCircle>{Report.totalHits}</NumberOfCircle>
                                     <TextOfCircle>Acertos</TextOfCircle>
                                 </CircleContent>
                             </Grid>
@@ -43,7 +48,7 @@ const Report = ()=>{
                                     width:280,
                                     height:280,
                                 }}>
-                                    <NumberOfCircle>{state.totalErrors}</NumberOfCircle>
+                                    <NumberOfCircle>{Report.totalErrors}</NumberOfCircle>
                                     <TextOfCircle>Erros</TextOfCircle>
                                 </CircleContent>
                             </Grid>
@@ -54,7 +59,7 @@ const Report = ()=>{
                     <Card>
                         <CardContent>
                             <Grid container justify="center">
-                                <CircleContent typeBorder="solid" sizeBorder="8px" color="orange" size={{
+                                <CircleContent typeBorder="solid" sizeBorder="8px" color="#303F9F" size={{
                                     width:280,
                                     height:280, 
                                 }}>
@@ -64,6 +69,16 @@ const Report = ()=>{
                             </Grid>
                         </CardContent>
                     </Card>
+                </Grid>
+
+                <Grid container justify="center" style={{marginBottom:30,marginTop:30}} spacing={1}>
+                    <Grid item>
+                        <ButtonActionReport colorButton="green"variant="contained" size="large" onClick={()=>setOpen(true)}>Salvar</ButtonActionReport>
+                        <DialogSaveReport handle={setOpen} handleName={setName} name={name} open={open}/>
+                    </Grid>
+                    <Grid item>
+                        <ButtonActionReport colorButton="red" variant="contained" size="large">Sair</ButtonActionReport>
+                    </Grid>
                 </Grid>
                 <ReportQuestionsResolved/>
             </Grid>

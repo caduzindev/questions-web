@@ -20,7 +20,15 @@ const ReportForm = ({questions,right,chosen,correct}:ReportProps)=>{
                         <RadioGroup aria-label="quiz" name="quiz">
                             {questions && (
                                 questions.map(item=>(
-                                    <FormLabel control={<Radio/>} label={item} value={item} success={correct===item} chosenIsCorrect={chosen===correct} chosenEqual={chosen===item}/>
+                                    <FormLabel 
+                                    control={<Radio color="primary"/>} 
+                                    label={item} 
+                                    value={item}
+                                    success={correct===item} 
+                                    chosenIsCorrect={chosen===correct} 
+                                    chosenEqual={chosen===item} 
+                                    checked={chosen===item?true:false}
+                                    />
                                 ))
                             )}
                         </RadioGroup>

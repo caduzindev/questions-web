@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core'
+import { Box, Button, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 
 interface CircleContentComponent{
@@ -47,5 +47,17 @@ export const TextOfCircle = styled(Typography)`
     &&{
         font-size:2rem;
         font-weight:bold;
+    }
+`
+export const ButtonActionReport = styled(Button)<{colorButton?:string}>`
+    &&{
+        background-color:${({colorButton})=>colorButton};
+        color:white;
+        font-weight:bold;
+
+        &:hover{
+            background-color:transparent;
+            color:${({colorButton})=>colorButton};
+        }
     }
 `
