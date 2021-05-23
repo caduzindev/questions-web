@@ -3,10 +3,12 @@ import { useQuiz } from "../../hooks/useQuiz"
 import Question from "../components/Question"
 import { ToastContainer,toast } from 'react-toastify'
 import { useHistory } from "react-router"
+import QuizFactory from "../../Factory/QuizFactory"
 
 const Quiz = ()=>{
     const history = useHistory()
     const { state,viewResult } = useQuiz()
+    const Quiz = QuizFactory(state)
 
     const handleViewResult = ()=>{
         const result = viewResult()
@@ -20,8 +22,8 @@ const Quiz = ()=>{
     return (
         <Grid container direction="column" alignItems="center" spacing={5}>
             <h1>Seus Questionario</h1>
-            {state.questions && (
-                state.questions.map(item=>(
+            {Quiz.questions && (
+                Quiz.questions.map(item=>(
                     <Grid item>
                         <Question {...item} typeForm="commom"/>
                     </Grid>

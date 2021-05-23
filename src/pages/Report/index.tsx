@@ -1,6 +1,6 @@
 import {  Card, CardContent, Grid } from "@material-ui/core"
 import { useEffect, useState } from "react"
-import ReportFactory from "../../Factory/ReportFactory"
+import QuizFactory from "../../Factory/QuizFactory"
 import { useQuiz } from "../../hooks/useQuiz"
 import QuizService from "../../services/QuizService"
 import DialogSaveReport from "../components/DialogSaveReport"
@@ -9,7 +9,7 @@ import { ButtonActionReport, CircleContent, NumberOfCircle, TextOfCircle } from 
 
 const Report = ()=>{
     const { state } = useQuiz()
-    const Report = ReportFactory(state)
+    const Quiz = QuizFactory(state)
     const [totalScore,setTotalScore] = useState(0)
     const [open,setOpen] = useState(false)
     const [name,setName] = useState('')
@@ -33,7 +33,7 @@ const Report = ()=>{
                                     width:280,
                                     height:280,
                                 }}>
-                                    <NumberOfCircle>{Report.totalHits}</NumberOfCircle>
+                                    <NumberOfCircle>{Quiz.totalHits}</NumberOfCircle>
                                     <TextOfCircle>Acertos</TextOfCircle>
                                 </CircleContent>
                             </Grid>
@@ -48,7 +48,7 @@ const Report = ()=>{
                                     width:280,
                                     height:280,
                                 }}>
-                                    <NumberOfCircle>{Report.totalErrors}</NumberOfCircle>
+                                    <NumberOfCircle>{Quiz.totalErrors}</NumberOfCircle>
                                     <TextOfCircle>Erros</TextOfCircle>
                                 </CircleContent>
                             </Grid>

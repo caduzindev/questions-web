@@ -1,7 +1,7 @@
 import { createContext, useReducer } from "react"
 import { v4 as uuidv4 } from 'uuid'
 import { QuestionJson } from "../Entity/Question"
-import { ReportJson } from '../Entity/Report'
+import { QuizJson } from "../Entity/Quiz"
 import { SuffleResponses } from "../helper/SuffleResponses"
 import QuizService from "../services/QuizService"
 import ReportService from "../services/ReportService"
@@ -13,7 +13,7 @@ interface QuizInterface{
 }
 
 interface QuizContextInterface{
-    state:ReportJson
+    state:QuizJson
     dispatch:any
     handleQuiz:(quantity:number)=>void
     handleAnswerQuestion:(idQuestion:string,chosen:string,isCorrect:boolean)=>void
@@ -35,7 +35,7 @@ type ACTIONTYPE =
     | { type:typeof ANSWER_QUESTION,payload:{id:string,chosen:string,isCorrect:boolean} }
     | { type:typeof SET_ERRORS_HITS,payload:{errors:number,hits:number} }
 
-const reduce = (state:ReportJson=initialState,action:ACTIONTYPE)=>{
+const reduce = (state:QuizJson=initialState,action:ACTIONTYPE)=>{
     switch (action.type) {
         case SET_QUESTIONS:
             return {

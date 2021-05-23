@@ -1,29 +1,28 @@
+import { QuizJson } from "../Entity/Quiz"
 import { ReportJson } from "../Entity/Report"
 
 class ReportRepository{
     public createStorage(key:string):void{
         localStorage.setItem(key,JSON.stringify([]))
     }
-    private getAllDataOfStorage(key:string):ReportJson[]{
-        return JSON.parse(localStorage.getItem(key) || '[]')
+    public getAllDataOfStorage(key:string):ReportJson[]{
+        const data = JSON.parse(localStorage.getItem(key) || "[]")
+
+        return data
     }
     public existsStorage(key:string):boolean{
         return !!localStorage.getItem(key)
     }
-    public setStorage(key:string,id:string,name:string,score:number,quiz:ReportJson):void{
-        const data = this.getAllDataOfStorage(key)
-
-        const obj = [
-            ...data,
-            {
-                id,
-                name,
-                score,
-                quiz
-            }
-        ]
-
-        localStorage.setItem(key,JSON.stringify(obj))
+    public setStorage(key:string,id:string,name:string,score:number,quiz:QuizJson):void{
+        let data = this.getAllDataOfStorage(key)
+        
+        data.push({
+            id,
+            name,
+            score,
+            quiz
+        })
+        localStorage.setItem(key,JSON.stringify(data))
     }
 }
 

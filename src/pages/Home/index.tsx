@@ -3,10 +3,22 @@ import { Container, InputQuantityQuestion, TextTitle } from "./styles";
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useHistory } from 'react-router-dom'
+import Header from "../components/Header";
+import { useEffect, useState } from "react";
+import ReportService from "../../services/ReportService";
 
 const Home = ()=>{
+    const [existReport,setExistReport] = useState(false)
     const history = useHistory()
     const initialValues:{quantity:string} = {quantity:""}
+
+    useEffect(()=>{
+        if(ReportService.existsReports()){
+            setExistReport(true)
+            return;
+        }
+        setExistReport(false)
+    },[])
 
     const formik = useFormik({
         initialValues,
@@ -23,26 +35,29 @@ const Home = ()=>{
         })
     })
     return (
-        <Container>
-            <Grid item>
-                <TextTitle>Quantas Questões?</TextTitle>
-            </Grid>
-            <Grid item>
-                 <form onSubmit={formik.handleSubmit}>
-                    <FormControl>
-                        <InputQuantityQuestion 
-                            id="quantity" 
-                            label="ex: 5" 
-                            variant="filled"
-                            name="quantity"
-                            onChange={formik.handleChange}
-                            value={formik.values.quantity}
-                        /> 
-                        <Button type="submit" variant="outlined" color="primary" size="large">Confirmar</Button>
-                    </FormControl>
-                 </form>
-            </Grid>
-        </Container>
+        <>
+            {existReport && (<Header/>)}
+            <Container>
+                <Grid item>
+                    <TextTitle>Quantas Questões?</TextTitle>
+                </Grid>
+                <Grid item>
+                    <form onSubmit={formik.handleSubmit}>
+                        <FormControl>
+                            <InputQuantityQuestion 
+                                id="quantity" 
+                                label="ex: 5" 
+                                variant="filled"
+                                name="quantity"
+                                onChange={formik.handleChange}
+                                value={formik.values.quantity}
+                            /> 
+                            <Button type="submit" variant="outlined" color="primary" size="large">Confirmar</Button>
+                        </FormControl>
+                    </form>
+                </Grid>
+            </Container>
+        </>
     )
 }
 
