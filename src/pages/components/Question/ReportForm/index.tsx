@@ -15,7 +15,7 @@ const ReportForm = ({questions,right,chosen,correct}:ReportProps)=>{
     return (
         <Grid container>
             <Grid item xs={12}>
-                <form>
+                <form style={{width:"100%"}}>
                     <FormControl component="fieldset">
                         <RadioGroup aria-label="quiz" name="quiz">
                             {questions && (

@@ -1,11 +1,17 @@
 import { Box, Grid } from "@material-ui/core"
+import { useParams } from "react-router"
 import QuizFactory from "../../../Factory/QuizFactory"
 import { useQuiz } from "../../../hooks/useQuiz"
 import Question from "../Question"
 
+interface ParamsTypes{
+    idReport:string;
+}
+
 const ReportQuestionsResolved = ()=>{
-    const { state } = useQuiz()
-    const Quiz = QuizFactory(state)
+    const { idReport } = useParams<ParamsTypes>()
+    const { handleReportIsParam } = useQuiz()
+    const Quiz = QuizFactory(handleReportIsParam(idReport))
 
     return (
         <Grid container style={{marginTop:20}}>

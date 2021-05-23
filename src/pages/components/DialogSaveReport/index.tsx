@@ -1,4 +1,5 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField,DialogContentText } from "@material-ui/core"
+import { useHistory } from "react-router"
 import { useQuiz } from "../../../hooks/useQuiz"
 
 interface DialogSaveReportProps{
@@ -9,6 +10,7 @@ interface DialogSaveReportProps{
 }
 
 const DialogSaveReport = ({open,handle,name,handleName}:DialogSaveReportProps)=>{
+    const history = useHistory()
     const {handleSave} = useQuiz()
     return(
         <Dialog open={open} onClose={()=>handle(false)}>
@@ -35,6 +37,7 @@ const DialogSaveReport = ({open,handle,name,handleName}:DialogSaveReportProps)=>
                 <Button color="primary" onClick={()=>{
                     handle(false)
                     handleSave(name)
+                    history.push('/')
                 }}>
                     Salvar
                 </Button>

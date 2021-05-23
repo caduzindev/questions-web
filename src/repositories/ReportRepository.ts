@@ -24,6 +24,11 @@ class ReportRepository{
         })
         localStorage.setItem(key,JSON.stringify(data))
     }
+    public getReport(id:string,key:string):ReportJson{
+        const data = this.getAllDataOfStorage(key)
+
+        return data.filter(item=>item.id===id)[0]
+    }
 }
 
 export default ReportRepository

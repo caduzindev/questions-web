@@ -12,6 +12,7 @@ function App() {
         <Route path="/start" component={Start} exact/>
         <Route path="/quiz" component={Quiz} exact/>
         <Route path="/report" component={Report} exact/>
+        <Route path="/report/:idReport" component={Report} exact/>
       </Switch>
     </BrowserRouter>
   );

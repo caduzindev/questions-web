@@ -1,26 +1,45 @@
 import {  Card, CardContent, Grid } from "@material-ui/core"
 import { useEffect, useState } from "react"
+import { useHistory, useParams } from "react-router"
 import QuizFactory from "../../Factory/QuizFactory"
 import { useQuiz } from "../../hooks/useQuiz"
 import QuizService from "../../services/QuizService"
+import ReportService from "../../services/ReportService"
 import DialogSaveReport from "../components/DialogSaveReport"
 import ReportQuestionsResolved from "../components/ReportQuestionsResolved"
 import { ButtonActionReport, CircleContent, NumberOfCircle, TextOfCircle } from "./styles"
 
+interface ParamsTypes{
+    idReport:string;
+}
+
 const Report = ()=>{
-    const { state } = useQuiz()
-    const Quiz = QuizFactory(state)
+    const history = useHistory()
+    const { state,handleReportIsParam } = useQuiz()
+    const { idReport } = useParams<ParamsTypes>()
+    
+    const Quiz = QuizFactory(handleReportIsParam(idReport))
     const [totalScore,setTotalScore] = useState(0)
     const [open,setOpen] = useState(false)
     const [name,setName] = useState('')
 
+
     useEffect(()=>{
-        if(!!state.totalHits){
+        if(!Quiz.questions.length && !idReport){
+            history.push('/')
+        }
+
+        if(!!state.totalHits && !idReport){
             QuizService.setTotalScore(state.hitValue,state.totalHits)
 
             setTotalScore(QuizService.getTotalScore())
+            return;
         }
-    },[state.hitValue, state.totalHits])
+        const data = ReportService.getReport(idReport)
+        if(!!data){
+            setTotalScore(data.score)
+        }
+    },[Quiz.questions.length, history, idReport, state.hitValue, state.totalHits])
 
     return (
         <>
@@ -73,11 +92,15 @@ const Report = ()=>{
 
                 <Grid container justify="center" style={{marginBottom:30,marginTop:30}} spacing={1}>
                     <Grid item>
-                        <ButtonActionReport colorButton="green"variant="contained" size="large" onClick={()=>setOpen(true)}>Salvar</ButtonActionReport>
-                        <DialogSaveReport handle={setOpen} handleName={setName} name={name} open={open}/>
+                        {!idReport && (
+                            <>
+                                <ButtonActionReport colorButton="green"variant="contained" size="large" onClick={()=>setOpen(true)}>Salvar</ButtonActionReport>
+                                <DialogSaveReport handle={setOpen} handleName={setName} name={name} open={open}/>
+                            </>
+                        )}
                     </Grid>
                     <Grid item>
-                        <ButtonActionReport colorButton="red" variant="contained" size="large">Sair</ButtonActionReport>
+                        <ButtonActionReport colorButton="red" variant="contained" size="large" onClick={()=>history.push('/')}>Sair</ButtonActionReport>
                     </Grid>
                 </Grid>
                 <ReportQuestionsResolved/>

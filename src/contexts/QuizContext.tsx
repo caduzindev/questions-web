@@ -19,6 +19,7 @@ interface QuizContextInterface{
     handleAnswerQuestion:(idQuestion:string,chosen:string,isCorrect:boolean)=>void
     viewResult:()=>boolean
     handleSave:(name:string)=>void
+    handleReportIsParam:(idReport:string)=>QuizJson
 }
 
 export const QuizContext = createContext({} as QuizContextInterface)
@@ -101,6 +102,17 @@ const QuizProvider = ({children}:QuizInterface)=>{
         const totalScore = QuizService.getTotalScore()
         ReportService.save(uuidv4(),name,totalScore,state)
     }
+    const handleReportIsParam = (idReport:string):QuizJson=>{
+        if(idReport){
+            const report = ReportService.getReport(idReport)
+            if(!report){
+                alert('Este Relatorio/Questionario não existe')
+                return state
+            }
+            return report?.quiz
+        }
+        return state
+    }
     return (
         <QuizContext.Provider value={{
             state,
@@ -108,7 +120,8 @@ const QuizProvider = ({children}:QuizInterface)=>{
             handleQuiz,
             handleAnswerQuestion,
             viewResult,
-            handleSave
+            handleSave,
+            handleReportIsParam
         }}>
             {children}
         </QuizContext.Provider>

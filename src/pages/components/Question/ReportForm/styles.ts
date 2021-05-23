@@ -11,6 +11,7 @@ export const FormLabel = styled(FormControlLabel)<{success:boolean,chosenIsCorre
                 return "color:red;"
             }
         }
+        return "color:white;"
     }}
 `
 export const SvgError = styled(SvgIcon)`

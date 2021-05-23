@@ -1,6 +1,7 @@
 import { Drawer, ListItemAvatar } from "@material-ui/core"
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import { ReportJson } from "../../../Entity/Report";
 import ReportService from "../../../services/ReportService";
 import { ListReport, TextItemTitle, TextItem, AvatarList, ListItemReport } from "./styles";
@@ -11,6 +12,7 @@ interface DrawerReportProps{
 }
 
 const DrawerReport = ({open,handle}:DrawerReportProps)=>{
+    const history = useHistory()
     const [reports,setReports] = useState<ReportJson[]>()
 
     useEffect(()=>{
@@ -24,7 +26,7 @@ const DrawerReport = ({open,handle}:DrawerReportProps)=>{
             <ListReport>
                 <TextItemTitle>Questionarios Salvos</TextItemTitle>
                 {reports?.map(report=>(
-                    <ListItemReport button>
+                    <ListItemReport button onClick={()=>history.push(`/report/${report.id}`)}>
                         <ListItemAvatar>
                             <AvatarList>
                                 <AssessmentIcon />
@@ -33,14 +35,6 @@ const DrawerReport = ({open,handle}:DrawerReportProps)=>{
                         <TextItem>{report.name}</TextItem>
                     </ListItemReport>
                 ))}
-                {/* <ListItemReport button>
-                    <ListItemAvatar>
-                        <AvatarList>
-                            <AssessmentIcon />
-                        </AvatarList>
-                    </ListItemAvatar>
-                    <TextItem>Relarotio 1</TextItem>
-                </ListItemReport> */}
             </ListReport>
         </Drawer>
     )

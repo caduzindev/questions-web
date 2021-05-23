@@ -28,6 +28,14 @@ class ReportService{
     public getAllReports():ReportJson[]{
         return this.repository.getAllDataOfStorage('reports')
     }
+    public getReport(id:string):ReportJson|null{
+        const report = this.repository.getReport(id,'reports')
+
+        if(!!report){
+            return report
+        }
+        return null
+    }
 }
 
 export default new ReportService(new ReportRepository())
