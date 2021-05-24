@@ -1,5 +1,5 @@
 import { QuestionJson } from "../../Entity/Question";
-import { ANSWER_QUESTION, SET_ERRORS_HITS, SET_QUESTIONS } from "../types/QuizTypes";
+import { ANSWER_QUESTION, CLEAR_STATE, SET_ERRORS_HITS, SET_QUESTIONS } from "../types/QuizTypes";
 
 export const setQuestions = (questions:QuestionJson[])=>{
     return {
@@ -26,5 +26,10 @@ export const setErrorsHits = (errors:number,hits:number)=>{
             errors,
             hits
         }
+    }
+}
+export const clearState = ()=>{
+    return {
+        type:CLEAR_STATE
     }
 }

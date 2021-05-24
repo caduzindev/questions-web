@@ -16,10 +16,17 @@ export const TextTitle = styled(Typography)`
         font-size:2.5rem;
         padding:15px;
         font-weight:bold;
+        @media(max-width:450px){
+            font-size:1.5rem;
+        }
     }
 `
 export const InputQuantityQuestion = styled(TextField)`
     &&{
         width:360px;
+
+        @media(max-width:450px){
+            width:280px;
+        }
     }
 `

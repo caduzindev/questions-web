@@ -52,7 +52,7 @@ const Home = ()=>{
                                 onChange={formik.handleChange}
                                 value={formik.values.quantity}
                             /> 
-                            <Button type="submit" variant="outlined" color="primary" size="large">Confirmar</Button>
+                            <Button type="submit" variant="contained" color="primary" size="large" style={{marginTop:5}}>Confirmar</Button>
                         </FormControl>
                     </form>
                 </Grid>

@@ -1,5 +1,5 @@
 import {  Card, CardContent, Grid } from "@material-ui/core"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useHistory, useParams } from "react-router"
 import QuizFactory from "../../Factory/QuizFactory"
 import { useQuiz } from "../../hooks/useQuiz"
@@ -14,8 +14,9 @@ interface ParamsTypes{
 }
 
 const Report = ()=>{
+    const ref = useRef<HTMLDivElement|null>(null)
     const history = useHistory()
-    const { state,handleReportIsParam } = useQuiz()
+    const { state,handleReportIsParam,handleClearState } = useQuiz()
     const { idReport } = useParams<ParamsTypes>()
     
     const Quiz = QuizFactory(handleReportIsParam(idReport))
@@ -41,10 +42,16 @@ const Report = ()=>{
         }
     },[Quiz.questions.length, history, idReport, state.hitValue, state.totalHits])
 
+    useEffect(()=>{
+        if(ref.current){
+            ref.current.scrollIntoView()
+        }
+    },[])
+
     return (
         <>
             <Grid container>
-                <Grid item xs={12} sm={4}>
+                <Grid item xs={12} sm={4} ref={ref}>
                     <Card>
                         <CardContent>
                             <Grid container justify="center">
@@ -100,7 +107,10 @@ const Report = ()=>{
                         )}
                     </Grid>
                     <Grid item>
-                        <ButtonActionReport colorButton="red" variant="contained" size="large" onClick={()=>history.push('/')}>Sair</ButtonActionReport>
+                        <ButtonActionReport colorButton="red" variant="contained" size="large" onClick={()=>{
+                            history.push('/')
+                            handleClearState()
+                        }}>Sair</ButtonActionReport>
                     </Grid>
                 </Grid>
                 <ReportQuestionsResolved/>

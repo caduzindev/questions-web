@@ -1,7 +1,13 @@
 import { FormControlLabel, SvgIcon, Typography } from '@material-ui/core'
 import styled from 'styled-components'
 
-export const FormLabel = styled(FormControlLabel)<{success:boolean,chosenIsCorrect:boolean,chosenEqual:boolean}>`
+interface FormLabelInterface{
+    success:boolean,
+    chosenIsCorrect:boolean,
+    chosenEqual:boolean
+}
+
+export const FormLabel = styled(FormControlLabel)<FormLabelInterface>`
     ${props=>{
         if(props.success){
             return "color:green;"

@@ -12,7 +12,7 @@ const CommomForm = ({ questions,handle }:CommomProps)=>{
                 <RadioGroup aria-label="quiz" name="quiz" onChange={handle}>
                     {questions && (
                         questions.map(item=>(
-                            <FormControlLabel control={<Radio/>} label={item} value={item}/>
+                            <FormControlLabel style={{color:'white'}} control={<Radio color="primary"/>} label={item} value={item}/>
                         ))
                     )}
                 </RadioGroup>

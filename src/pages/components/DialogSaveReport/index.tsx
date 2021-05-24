@@ -11,7 +11,7 @@ interface DialogSaveReportProps{
 
 const DialogSaveReport = ({open,handle,name,handleName}:DialogSaveReportProps)=>{
     const history = useHistory()
-    const {handleSave} = useQuiz()
+    const {handleSave,handleClearState} = useQuiz()
     return(
         <Dialog open={open} onClose={()=>handle(false)}>
             <DialogTitle>Salvar</DialogTitle>
@@ -38,6 +38,7 @@ const DialogSaveReport = ({open,handle,name,handleName}:DialogSaveReportProps)=>
                     handle(false)
                     handleSave(name)
                     history.push('/')
+                    handleClearState()
                 }}>
                     Salvar
                 </Button>

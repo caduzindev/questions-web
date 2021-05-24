@@ -5,8 +5,8 @@ import { QuizJson } from "../Entity/Quiz"
 import { SuffleResponses } from "../helper/SuffleResponses"
 import QuizService from "../services/QuizService"
 import ReportService from "../services/ReportService"
-import { answerQuestion,setErrorsHits,setQuestions } from "./actions/QuizActions"
-import { SET_QUESTIONS, ANSWER_QUESTION, SET_ERRORS_HITS } from "./types/QuizTypes"
+import { answerQuestion,clearState,setErrorsHits,setQuestions } from "./actions/QuizActions"
+import { SET_QUESTIONS, ANSWER_QUESTION, SET_ERRORS_HITS, CLEAR_STATE } from "./types/QuizTypes"
 
 interface QuizInterface{
     children: React.ReactNode
@@ -20,6 +20,7 @@ interface QuizContextInterface{
     viewResult:()=>boolean
     handleSave:(name:string)=>void
     handleReportIsParam:(idReport:string)=>QuizJson
+    handleClearState:()=>void
 }
 
 export const QuizContext = createContext({} as QuizContextInterface)
@@ -35,6 +36,7 @@ type ACTIONTYPE =
     | { type:typeof SET_QUESTIONS,payload:{questions:QuestionJson[]} }
     | { type:typeof ANSWER_QUESTION,payload:{id:string,chosen:string,isCorrect:boolean} }
     | { type:typeof SET_ERRORS_HITS,payload:{errors:number,hits:number} }
+    | { type:typeof CLEAR_STATE }
 
 const reduce = (state:QuizJson=initialState,action:ACTIONTYPE)=>{
     switch (action.type) {
@@ -66,6 +68,8 @@ const reduce = (state:QuizJson=initialState,action:ACTIONTYPE)=>{
                 totalHits:action.payload.hits,
                 totalErrors:action.payload.errors
             }
+        case CLEAR_STATE:
+            return initialState
         default:
             return state
     }
@@ -113,6 +117,9 @@ const QuizProvider = ({children}:QuizInterface)=>{
         }
         return state
     }
+    const handleClearState = ()=>{
+        dispatch(clearState())
+    }
     return (
         <QuizContext.Provider value={{
             state,
@@ -121,7 +128,8 @@ const QuizProvider = ({children}:QuizInterface)=>{
             handleAnswerQuestion,
             viewResult,
             handleSave,
-            handleReportIsParam
+            handleReportIsParam,
+            handleClearState
         }}>
             {children}
         </QuizContext.Provider>

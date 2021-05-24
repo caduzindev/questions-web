@@ -38,7 +38,7 @@ const Question = (props:QuestionProps)=>{
                 <TextHead>{Question.category}</TextHead>
             </Grid>
             <Grid item>
-                <TextQuestion>{Question.question}</TextQuestion>
+                <TextQuestion dangerouslySetInnerHTML={{__html:Question.question}}></TextQuestion>
             </Grid>
             <Grid item>
                 {questions &&(
