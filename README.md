@@ -40,7 +40,7 @@ Este projeto e sobre um sistema de questionario web, no qual o usuario escolhe a
 
 ## Acessando direto pelo site:
 
-- Você pode clicar nesse [link](https://pizzaria-toffanetto.vercel.app/) e acessar a aplicação que está hospedada na plataforma Vercel.
+- Você pode clicar nesse [link](https://questions-web.vercel.app/) e acessar a aplicação que está hospedada na plataforma Vercel.
 
 <br />
 
