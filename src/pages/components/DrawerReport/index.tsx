@@ -34,7 +34,7 @@ const DrawerReport = ({open,handle}:DrawerReportProps)=>{
                         </ListItemAvatar>
                         <TextItem>{report.name}</TextItem>
                     </ListItemReport>
-                ))}
+                ))} 
             </ListReport>
         </Drawer>
     )
